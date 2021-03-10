@@ -1,0 +1,9 @@
+LUAINC = -IC:\Users\Public\lua\LuaRocks\include -ID:\Downloads\luv-master\luv-master\deps\lua-compat-5.3\c-api
+LUALIB = -LC:\Users\Public\lua\LuaRocks -llua51
+CFLAGS = -O2 -Wall
+
+winfile.dll : winfile.c
+	gcc --shared $(CFLAGS) $(LUAINC) -o $@ $^ $(LUALIB) -lshell32
+
+clean :
+	rm winfile.dll

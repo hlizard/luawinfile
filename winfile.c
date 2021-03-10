@@ -6,6 +6,7 @@
 #include <Shlobj.h>
 #include <sys/stat.h>
 #include <wchar.h>
+#include <compat-5.3.h>
 
 #if _MSC_VER > 0
 #include <malloc.h>
@@ -705,7 +706,10 @@ static int io_fclose (lua_State *L) {
 */
 static LStream *newprefile (lua_State *L) {
 	LStream *p = (LStream *)lua_newuserdata(L, sizeof(LStream));
+// https://github.com/keplerproject/lua-compat-5.3/wiki/luaL_Stream
+#if LUA_VERSION_NUM > 501
 	p->closef = NULL;  /* mark file handle as 'closed' */
+#endif
 	luaL_setmetatable(L, LUA_FILEHANDLE);
 	return p;
 }
@@ -713,7 +717,9 @@ static LStream *newprefile (lua_State *L) {
 static LStream *newfile (lua_State *L) {
 	LStream *p = newprefile(L);
 	p->f = NULL;
+#if LUA_VERSION_NUM > 501
 	p->closef = &io_fclose;
+#endif
 	return p;
 }
 
@@ -760,7 +766,9 @@ lpopen(lua_State *L) {
 	wmode[n] = 0;
 
 	p->f = _wpopen(path, wmode);
+#if LUA_VERSION_NUM > 501
 	p->closef = &io_pclose;
+#endif
 	return (p->f == NULL) ? luaL_fileresult(L, 0, filename) : 1;
 }
 
@@ -853,7 +861,7 @@ ldrives(lua_State *L) {
 	return 1;
 }
 
-LUAMOD_API int
+extern int  // 参考https://blog.csdn.net/q270274978/article/details/42041659 LUAMOD_API就是extern
 luaopen_winfile(lua_State *L) {
 	luaL_checkversion(L);
 	luaL_Reg l[] = {
