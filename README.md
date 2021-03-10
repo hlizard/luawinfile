@@ -26,3 +26,6 @@ About lua 5.1 luaL_Stream closef:
 https://github.com/keplerproject/lua-compat-5.3/wiki/luaL_Stream
 https://github.com/keplerproject/lua-compat-5.2/issues/22
 https://github.com/keplerproject/lua-compat-5.2/issues/10
+
+
+mingw32-make.exe -f Makefile.me winfile.dll
