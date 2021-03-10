@@ -20,3 +20,9 @@ This lua library is for windows (mingw) only . It's similar to [lfs](https://kep
 * io.popen ==> winfile.popen
 * winfile.shortname : Get the shorname of the path.
 * winfile.personaldir : Get My Document dir.
+
+
+About lua 5.1 luaL_Stream closef:
+https://github.com/keplerproject/lua-compat-5.3/wiki/luaL_Stream
+https://github.com/keplerproject/lua-compat-5.2/issues/22
+https://github.com/keplerproject/lua-compat-5.2/issues/10
